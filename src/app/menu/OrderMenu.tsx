@@ -650,7 +650,16 @@ export default function OrderMenu() {
                     >
                       <FormControlLabel
                         value="dine in"
-                        control={<Radio />}
+                        control={
+                          <Radio
+                            sx={{
+                              color: "#ff9800", // Warna default
+                              "&.Mui-checked": {
+                                color: "#ff9800", // Warna saat dipilih
+                              },
+                            }}
+                          />
+                        }
                         label={
                           <Box display="flex" alignItems="center" gap={1}>
                             <RestaurantIcon sx={{ color: "#ff9800" }} />
@@ -662,7 +671,16 @@ export default function OrderMenu() {
                       />
                       <FormControlLabel
                         value="takeaway"
-                        control={<Radio />}
+                        control={
+                          <Radio
+                            sx={{
+                              color: "#ff9800", // Warna default
+                              "&.Mui-checked": {
+                                color: "#ff9800", // Warna saat dipilih
+                              },
+                            }}
+                          />
+                        }
                         label={
                           <Box display="flex" alignItems="center" gap={1}>
                             <ShoppingBagIcon sx={{ color: "#ff9800" }} />
@@ -686,7 +704,16 @@ export default function OrderMenu() {
                     >
                       <FormControlLabel
                         value="cash"
-                        control={<Radio />}
+                        control={
+                          <Radio
+                            sx={{
+                              color: "#ff9800", // Warna default
+                              "&.Mui-checked": {
+                                color: "#ff9800", // Warna saat dipilih
+                              },
+                            }}
+                          />
+                        }
                         label={
                           <Box display="flex" alignItems="center">
                             <Storefront sx={{ mr: 1, color: "#ff9800" }} />
@@ -697,7 +724,16 @@ export default function OrderMenu() {
                       <FormControlLabel
                         value="qris"
                         disabled
-                        control={<Radio />}
+                        control={
+                          <Radio
+                            sx={{
+                              color: "#ff9800", // Warna default
+                              "&.Mui-checked": {
+                                color: "#ff9800", // Warna saat dipilih
+                              },
+                            }}
+                          />
+                        }
                         label={
                           <Box display="flex" alignItems="center">
                             <QrCode sx={{ mr: 1, color: "#ff9800" }} />
@@ -802,7 +838,9 @@ export default function OrderMenu() {
                       {order.orderNo}
                     </Typography>
                     <Typography variant="body2" fontWeight="bold">
-                      {order.orderType === 'dine in' ? 'Makan di tempat' : 'Bawa pulang'}
+                      {order.orderType === "dine in"
+                        ? "Makan di tempat"
+                        : "Bawa pulang"}
                     </Typography>
                   </Box>
 
@@ -858,7 +896,7 @@ export default function OrderMenu() {
                       fontWeight="bold"
                       sx={{ color: "#ff9800" }}
                     >
-                    {formatCurrencyIDR(order.total)}
+                      {formatCurrencyIDR(order.total)}
                     </Typography>
                   </Box>
                   <Divider sx={{ my: 2 }} />
