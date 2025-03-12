@@ -45,6 +45,8 @@ import { Add, QrCode, Remove, Storefront } from "@mui/icons-material";
 import { formatCurrencyIDR } from "@/components/functions/IDRFormatter";
 import Footer from "@/components/Footer";
 import CloseIcon from "@mui/icons-material/Close";
+import RestaurantIcon from "@mui/icons-material/Restaurant";
+import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
 
 interface MenuItem {
   id: number;
@@ -73,6 +75,7 @@ interface OrderHistory {
   total: number;
   paymentMetode: string;
   paymentStatus: string;
+  orderType: string;
   date: string; // Format ISO string atau tanggal biasa
 }
 
@@ -230,6 +233,7 @@ export default function OrderMenu() {
   const [openHistory, setOpenHistory] = useState(false);
   const [orderHistory, setOrderHistory] = useState<OrderHistory[]>([]);
   const [paymentMethod, setPaymentMethod] = useState("cash");
+  const [orderType, setOrderType] = useState("cash");
 
   const filteredMenu = menuItems.filter((item) =>
     item.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -338,6 +342,7 @@ export default function OrderMenu() {
       paymentStatus: "pending",
       paymentMetode: paymentMethod,
       tableNo: "1",
+      orderType: orderType,
     };
 
     setOrderHistory((prev) => [...prev, newOrder]); // Tambah ke history
@@ -451,7 +456,7 @@ export default function OrderMenu() {
                       </Typography>
                       <Typography variant="body1" color="textSecondary">
                         {formatCurrencyIDR(item.price)}
-                        {/* Rp {item.price.toLocaleString()} */}
+                        {/* Rp {item.price} */}
                       </Typography>
                       <Box display="flex" alignItems="center" mt={1}>
                         {/* Tombol - */}
@@ -636,6 +641,42 @@ export default function OrderMenu() {
               <Card sx={{ mt: 3, p: 1.5, borderRadius: 2 }}>
                 <CardContent>
                   <Typography variant="body1" fontWeight="bold">
+                    Tipe Pesanan
+                  </Typography>
+                  <FormControl component="fieldset">
+                    <RadioGroup
+                      value={orderType}
+                      onChange={(e) => setOrderType(e.target.value)}
+                    >
+                      <FormControlLabel
+                        value="dine in"
+                        control={<Radio />}
+                        label={
+                          <Box display="flex" alignItems="center" gap={1}>
+                            <RestaurantIcon sx={{ color: "#ff9800" }} />
+                            <Typography variant="body2">
+                              Makan di Tempat
+                            </Typography>
+                          </Box>
+                        }
+                      />
+                      <FormControlLabel
+                        value="takeaway"
+                        control={<Radio />}
+                        label={
+                          <Box display="flex" alignItems="center" gap={1}>
+                            <ShoppingBagIcon sx={{ color: "#ff9800" }} />
+                            <Typography variant="body2">Bawa Pulang</Typography>
+                          </Box>
+                        }
+                      />
+                    </RadioGroup>
+                  </FormControl>
+                </CardContent>
+              </Card>
+              <Card sx={{ mt: 3, p: 1.5, borderRadius: 2 }}>
+                <CardContent>
+                  <Typography variant="body1" fontWeight="bold">
                     Metode Pembayaran
                   </Typography>
                   <FormControl component="fieldset">
@@ -748,13 +789,23 @@ export default function OrderMenu() {
                     </Typography>
                   </Box>
 
-                  <Typography
-                    variant="body2"
-                    fontWeight="bold"
-                    sx={{ color: "#ff9800" }}
+                  <Box
+                    display="flex"
+                    justifyContent="space-between"
+                    alignItems="center"
                   >
-                    {order.orderNo}
-                  </Typography>
+                    <Typography
+                      variant="body2"
+                      fontWeight="bold"
+                      sx={{ color: "#ff9800" }}
+                    >
+                      {order.orderNo}
+                    </Typography>
+                    <Typography variant="body2" fontWeight="bold">
+                      {order.orderType === 'dinein' ? 'Makan di tempat' : 'Bawa pulang'}
+                    </Typography>
+                  </Box>
+
                   <Box
                     display="flex"
                     justifyContent="space-between"
@@ -780,7 +831,7 @@ export default function OrderMenu() {
                     <ListItem key={item.id}>
                       <ListItemText
                         primary={`${item.name} x${item.quantity}`}
-                        secondary={`Rp ${item.price.toLocaleString()}`}
+                        secondary={formatCurrencyIDR(item.price)}
                       />
                     </ListItem>
                   ))}
@@ -788,13 +839,13 @@ export default function OrderMenu() {
                   <Box display="flex" justifyContent="space-between">
                     <Typography variant="body2">Subtotal:</Typography>
                     <Typography variant="body2" fontWeight="bold">
-                      Rp {order.totalBeforeTax.toLocaleString()}
+                      {formatCurrencyIDR(order.totalBeforeTax)}
                     </Typography>
                   </Box>
                   <Box display="flex" justifyContent="space-between">
                     <Typography variant="body2">Pajak (11%):</Typography>
                     <Typography variant="body2" fontWeight="bold">
-                      Rp {order.totalTax.toLocaleString()}
+                      {formatCurrencyIDR(order.totalTax)}
                     </Typography>
                   </Box>
                   <Divider sx={{ my: 1 }} />
@@ -807,7 +858,7 @@ export default function OrderMenu() {
                       fontWeight="bold"
                       sx={{ color: "#ff9800" }}
                     >
-                      Rp {order.total.toLocaleString()}
+                    {formatCurrencyIDR(order.total)}
                     </Typography>
                   </Box>
                   <Divider sx={{ my: 2 }} />
