@@ -233,7 +233,7 @@ export default function OrderMenu() {
   const [openHistory, setOpenHistory] = useState(false);
   const [orderHistory, setOrderHistory] = useState<OrderHistory[]>([]);
   const [paymentMethod, setPaymentMethod] = useState("cash");
-  const [orderType, setOrderType] = useState("cash");
+  const [orderType, setOrderType] = useState("dine in");
 
   const filteredMenu = menuItems.filter((item) =>
     item.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -802,7 +802,7 @@ export default function OrderMenu() {
                       {order.orderNo}
                     </Typography>
                     <Typography variant="body2" fontWeight="bold">
-                      {order.orderType === 'dinein' ? 'Makan di tempat' : 'Bawa pulang'}
+                      {order.orderType === 'dine in' ? 'Makan di tempat' : 'Bawa pulang'}
                     </Typography>
                   </Box>
 
