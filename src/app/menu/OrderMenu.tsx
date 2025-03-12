@@ -263,7 +263,6 @@ export default function OrderMenu() {
   useEffect(() => {
     if (typeof window !== "undefined") {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(orderHistory));
-      localStorage.setItem(TIMESTAMP_KEY, String(getMidnightTimestamp()));
     }
   }, [orderHistory]);
 
