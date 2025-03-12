@@ -719,89 +719,102 @@ export default function OrderMenu() {
           </Box>
           <Divider sx={{ my: 2 }} />
           <List>
-            {orderHistory.map((order) => (
-              <Box key={order.id} mb={2}>
-                <Box
-                  display="flex"
-                  justifyContent="space-between"
-                  alignItems="center"
-                >
-                  <Typography variant="body2" fontWeight="bold">
-                    Meja {order.tableNo}
-                  </Typography>
+            {orderHistory.length === 0 ? (
+              <Typography
+                variant="body1"
+                textAlign="center"
+                sx={{ py: 2 }}
+                mb={2}
+              >
+                Belum ada pesanan
+              </Typography>
+            ) : (
+              orderHistory.map((order) => (
+                <Box key={order.id} mb={2}>
+                  <Box
+                    display="flex"
+                    justifyContent="space-between"
+                    alignItems="center"
+                  >
+                    <Typography variant="body2" fontWeight="bold">
+                      Meja {order.tableNo}
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      fontWeight="bold"
+                      color="textSecondary"
+                    >
+                      {new Date(order.date).toLocaleDateString("id-ID")}
+                    </Typography>
+                  </Box>
+
                   <Typography
                     variant="body2"
-                    fontWeight="bold"
-                    color="textSecondary"
-                  >
-                    {new Date(order.date).toLocaleDateString("id-ID")}
-                  </Typography>
-                </Box>
-
-                <Typography
-                  variant="body2"
-                  fontWeight="bold"
-                  sx={{ color: "#ff9800" }}
-                >
-                  {order.orderNo}
-                </Typography>
-                <Box
-                  display="flex"
-                  justifyContent="space-between"
-                  alignItems="center"
-                >
-                  <Typography variant="body2" fontWeight="bold">
-                    {order.paymentMetode === "cash" ? "Cash" : "QRIS"}
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    fontWeight="bold"
-                    sx={{
-                      color: order.paymentStatus === "paid" ? "green" : "red",
-                    }}
-                  >
-                    {order.paymentStatus === "paid" ? "Lunas" : "Belum Dibayar"}
-                  </Typography>
-                </Box>
-
-                {order.items.map((item) => (
-                  <ListItem key={item.id}>
-                    <ListItemText
-                      primary={`${item.name} x${item.quantity}`}
-                      secondary={`Rp ${item.price.toLocaleString()}`}
-                    />
-                  </ListItem>
-                ))}
-                <Divider sx={{ my: 2 }} />
-                <Box display="flex" justifyContent="space-between">
-                  <Typography variant="body2">Subtotal:</Typography>
-                  <Typography variant="body2" fontWeight="bold">
-                    Rp {order.totalBeforeTax.toLocaleString()}
-                  </Typography>
-                </Box>
-                <Box display="flex" justifyContent="space-between">
-                  <Typography variant="body2">Pajak (11%):</Typography>
-                  <Typography variant="body2" fontWeight="bold">
-                    Rp {order.totalTax.toLocaleString()}
-                  </Typography>
-                </Box>
-                <Divider sx={{ my: 1 }} />
-                <Box display="flex" justifyContent="space-between">
-                  <Typography variant="h6" fontWeight="bold">
-                    Total:
-                  </Typography>
-                  <Typography
-                    variant="h6"
                     fontWeight="bold"
                     sx={{ color: "#ff9800" }}
                   >
-                    Rp {order.total.toLocaleString()}
+                    {order.orderNo}
                   </Typography>
+                  <Box
+                    display="flex"
+                    justifyContent="space-between"
+                    alignItems="center"
+                  >
+                    <Typography variant="body2" fontWeight="bold">
+                      {order.paymentMetode === "cash" ? "Cash" : "QRIS"}
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      fontWeight="bold"
+                      sx={{
+                        color: order.paymentStatus === "paid" ? "green" : "red",
+                      }}
+                    >
+                      {order.paymentStatus === "paid"
+                        ? "Lunas"
+                        : "Belum Dibayar"}
+                    </Typography>
+                  </Box>
+
+                  {order.items.map((item) => (
+                    <ListItem key={item.id}>
+                      <ListItemText
+                        primary={`${item.name} x${item.quantity}`}
+                        secondary={`Rp ${item.price.toLocaleString()}`}
+                      />
+                    </ListItem>
+                  ))}
+                  <Divider sx={{ my: 2 }} />
+                  <Box display="flex" justifyContent="space-between">
+                    <Typography variant="body2">Subtotal:</Typography>
+                    <Typography variant="body2" fontWeight="bold">
+                      Rp {order.totalBeforeTax.toLocaleString()}
+                    </Typography>
+                  </Box>
+                  <Box display="flex" justifyContent="space-between">
+                    <Typography variant="body2">Pajak (11%):</Typography>
+                    <Typography variant="body2" fontWeight="bold">
+                      Rp {order.totalTax.toLocaleString()}
+                    </Typography>
+                  </Box>
+                  <Divider sx={{ my: 1 }} />
+                  <Box display="flex" justifyContent="space-between">
+                    <Typography variant="h6" fontWeight="bold">
+                      Total:
+                    </Typography>
+                    <Typography
+                      variant="h6"
+                      fontWeight="bold"
+                      sx={{ color: "#ff9800" }}
+                    >
+                      Rp {order.total.toLocaleString()}
+                    </Typography>
+                  </Box>
+                  <Divider sx={{ my: 2 }} />
+                  <Divider sx={{ py: 2 }} />
                 </Box>
-                <Divider sx={{ my: 2 }} />
-                <Divider sx={{ py: 2 }} />
-              </Box>
-            ))}
+              ))
+            )}
           </List>
           <Button
             sx={{ bgcolor: "#ff9800" }}
