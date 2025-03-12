@@ -218,7 +218,7 @@ const TIMESTAMP_KEY = "orderHistoryTimestamp";
 
 const getMidnightTimestamp = () => {
   const now = new Date();
-  now.setUTCHours(17, 0, 0, 0); // GMT+7 -> 12:00 AM (UTC+0 = 17:00)
+  now.setUTCHours(18, 1, 0, 0); // GMT+7 -> 12:00 AM (UTC+0 = 17:00)
   return now.getTime();
 };
 
@@ -246,9 +246,10 @@ export default function OrderMenu() {
     const savedTimestamp = localStorage.getItem(TIMESTAMP_KEY);
 
     const now = Date.now();
+    
     const midnightTimestamp = getMidnightTimestamp();
 
-    if (!savedTimestamp || Number(savedTimestamp) < midnightTimestamp) {
+    if (!savedTimestamp || Number(savedTimestamp) < now) {
       // Reset jika sudah lewat jam 12 malam
       localStorage.removeItem(STORAGE_KEY);
       localStorage.setItem(TIMESTAMP_KEY, String(midnightTimestamp));
